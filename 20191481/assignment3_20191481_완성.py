@@ -43,10 +43,13 @@ def doScoreDB(scdb):
         # del name으로 주어진 name이 같은 모든 사람 레코드 제거
         elif parse[0] == 'del':
             try:
-                for p in scdb:
+                i = 0
+                while i < len(scdb):
+                    p = scdb[i]
                     if p['Name'] == parse[1]:
                         scdb.remove(p)
-                    else:
+                        i = i - 1
+                    i += 1
             except:
                 print("Try again")
 
@@ -83,6 +86,18 @@ def showScoreDB(scdb, keyname):
         for attr in sorted(p):
             print(attr + "=" + p[attr], end=' ')
         print()
+
+def findScoreDB(scdb, keyName):
+    for p in scdb:
+        if p['Name'] == keyName:
+            print("Age=" + p['Age'] + " Name=" + p['Name'] + " Score=" + p['Score'])
+
+def incScoreDB(scdb, keyName, amout):
+    for person in scdb:
+        if person['Name'] == keyName:
+            person['Score'] = str(int(person['Score']) + int(amout))
+        else:
+            continue
 
 
 scoredb = readScoreDB()

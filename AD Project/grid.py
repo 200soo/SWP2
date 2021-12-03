@@ -77,6 +77,6 @@ class Grid:
         self.blankGrid = [[0 for j in range(0, 9)] for i in range(0, 9)]
         for row in range(0, 9):
             for col in range(0, 9):
-                # difficult 1~3으로 설정하여 blank 개수 조절
+                # difficult 1 또는 2로 설정하여 blank 개수 조절
                 if random.randint(0, difficult) == 0:
                     self.blankGrid[row][col] = self.originGrid[row][col]

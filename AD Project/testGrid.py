@@ -1,8 +1,9 @@
 import sys
 from grid import Grid
-
+from sudoku import SudokuCheck
 
 grid = Grid()
+sudoku = SudokuCheck()
 
 # 그리드 생성되는 것 확인
 grid.createGrid()
@@ -32,3 +33,6 @@ for row in range(0, 9):
         res += str(grid.blankGrid[row][col]) + ' '
     print(res)
 print('\n')
+
+print(sudoku.finalCheck(grid.originGrid))
+print(sudoku.finalCheck(grid.blankGrid))

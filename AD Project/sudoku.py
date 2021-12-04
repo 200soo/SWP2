@@ -2,7 +2,6 @@ class SudokuCheck:
 
     # 숫자가 입력될 때 호출됨. 입력된 수의 스도쿠 규칙 만족 여부 확인
     def liveCheck(self, grid, row, col, num):
-
         # 행, 열에 같은 숫자 있는지 확인
         for i in range(0, 9):
             if (grid[i][col] == num) or (grid[row][i] == num):

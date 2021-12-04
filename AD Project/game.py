@@ -70,7 +70,7 @@ class SudokuGame(QDialog, layout):
                     num = str(self.grid.blankGrid[row][col])
                     self.gridText[row*9+col].setReadOnly(True)
                     self.gridText[row*9+col].setText(num)
-                    self.gridText[row*9+col].setStyleSheet("background: rgb(233, 233, 233)")
+                    self.gridText[row*9+col].setStyleSheet("background: rgb(200, 200, 200)")
 
         # time.py의 startTime 호출하여 게임 시작 시간 저장
         self.mytime.startTime()

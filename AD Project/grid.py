@@ -1,5 +1,7 @@
 import sys
 import random
+from datetime import datetime
+random.seed(datetime.now())
 
 
 # Start Game이 눌리면 스도쿠 퍼즐의 기본 grid 생성

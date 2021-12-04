@@ -70,7 +70,7 @@ class SudokuGame(QDialog, layout):
                     num = str(self.grid.blankGrid[row][col])
                     self.gridText[row*9+col].setReadOnly(True)
                     self.gridText[row*9+col].setText(num)
-                    self.gridText[row*9+col].setStyleSheet("background: rgb(200, 200, 200)")
+                    self.gridText[row*9+col].setStyleSheet("background: rgb(233, 233, 233)")
 
         # time.py의 startTime 호출하여 게임 시작 시간 저장
         self.mytime.startTime()
@@ -86,6 +86,9 @@ class SudokuGame(QDialog, layout):
             # gridText 수정 불가하게 설정
             for k in range(0, 80):
                 self.gridText[k].setReadOnly(True)
+                for k in range(0, 81):
+                    row, col = k//9, k%9
+                    self.gridText[k].setReadOnly(True)
         else:
             self.Result_Window.setText('Try Again!')
 

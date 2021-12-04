@@ -80,7 +80,7 @@ class SudokuGame(QDialog, layout):
         # sudoku.py의 finalCheck를 통해 게임 규칙 만족하는지 확인.
         if self.sudoku.finalCheck(self.grid.blankGrid) == True:
             # 성공하면 time.py의 endTime 호출하여 게임 시간 출력.
-            timer = str(int(self.mytime.endTime()))
+            timer = str(self.mytime.endTime())
             timer += 'sec'
             self.Result_Window.setText(timer)
             # gridText 수정 불가하게 설정

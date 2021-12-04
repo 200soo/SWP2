@@ -10,4 +10,4 @@ class CheckTime:
     # starttime - 현재 시각 return
     def endTime(self):
         self.endtime = time.time()
-        return (self.endtime - self.starttime)
+        return int(self.endtime - self.starttime)

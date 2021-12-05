@@ -45,6 +45,12 @@ class SudokuGame(QDialog, layout):
         self.gridText[60].textChanged.connect(lambda: self.submitEntered(60)); self.gridText[61].textChanged.connect(lambda: self.submitEntered(61)); self.gridText[62].textChanged.connect(lambda: self.submitEntered(62)); self.gridText[63].textChanged.connect(lambda: self.submitEntered(63)); self.gridText[64].textChanged.connect(lambda: self.submitEntered(64)); self.gridText[65].textChanged.connect(lambda: self.submitEntered(65)); self.gridText[66].textChanged.connect(lambda: self.submitEntered(66)); self.gridText[67].textChanged.connect(lambda: self.submitEntered(67)); self.gridText[68].textChanged.connect(lambda: self.submitEntered(68)); self.gridText[69].textChanged.connect(lambda: self.submitEntered(69))
         self.gridText[70].textChanged.connect(lambda: self.submitEntered(70)); self.gridText[71].textChanged.connect(lambda: self.submitEntered(71)); self.gridText[72].textChanged.connect(lambda: self.submitEntered(72)); self.gridText[73].textChanged.connect(lambda: self.submitEntered(73)); self.gridText[74].textChanged.connect(lambda: self.submitEntered(74)); self.gridText[75].textChanged.connect(lambda: self.submitEntered(75)); self.gridText[76].textChanged.connect(lambda: self.submitEntered(76)); self.gridText[77].textChanged.connect(lambda: self.submitEntered(77)); self.gridText[78].textChanged.connect(lambda: self.submitEntered(78)); self.gridText[79].textChanged.connect(lambda: self.submitEntered(79))
         self.gridText[80].textChanged.connect(lambda: self.submitEntered(80)); 
+        
+        # 초기화면에서 입력 불가하게 설정
+        for k in range(0, 81):
+            row, col = k//9, k%9
+            self.gridText[k].setReadOnly(True)
+
 
     # "Start Game" 버튼에 대한 콜백. grid.py의 class Grid 호출.
     def startGame(self):
@@ -74,6 +80,7 @@ class SudokuGame(QDialog, layout):
 
         # time.py의 startTime 호출하여 게임 시작 시간 저장
         self.mytime.startTime()
+
         
     # "Submit" 버튼에 대한 콜백. 게임 결과 출력.
     def submitClicked(self):
@@ -99,26 +106,28 @@ class SudokuGame(QDialog, layout):
         self.grid.blankGrid[row][col] = 0
         self.gridText[k].setStyleSheet("background: rgb(255, 255, 255)")
         text = self.gridText[k].text()
-        if text.isdigit() ==True:
+        if not text.isdigit():
+            if text == '':
+                return
+            else:
+                self.gridText[k].setText('')
+                return
+        else:
             num = int(text)
-
             if (1 <= num <= 9):
-                # 스도쿠 규칙 만족하면 배경 흰색, blankGrid에 항목 추가
+                # blankGrid에 항목 추가
                 if self.sudoku.liveCheck(self.grid.blankGrid, row, col, num) == 1:
-                    self.grid.blankGrid[row][col] = num
+                    # 스도쿠 규칙 만족하면 배경 흰색으로
                     self.gridText[k].setStyleSheet("background: rgb(255, 255, 255)")
-                # 스도쿠 규칙을 만족하지 않으면 빨간 색으로 배경 변화
                 else:
-                    self.grid.blankGrid[row][col] = 0
+                    # 스도쿠 규칙을 만족하지 않으면 빨간 색으로 배경 변화
                     self.gridText[k].setStyleSheet("background: rgb(255, 200, 200)")
+                
+                self.grid.blankGrid[row][col] = num
             else:
                 self.grid.blankGrid[row][col] = 0
+                self.gridText[k].setText('')
                 self.gridText[k].setStyleSheet("background: rgb(255, 200, 200)")
-
-        elif text == '':
-            self.gridText[k].setStyleSheet("background: rgb(255, 255, 255)")
-        else :
-            self.gridText[k].setStyleSheet("background: rgb(255, 200, 200)")
 
 
 

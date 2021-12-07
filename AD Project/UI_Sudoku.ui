@@ -6,9 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>496</height>
+    <width>452</width>
+    <height>532</height>
    </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -17,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>390</y>
+     <y>400</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -36,8 +39,8 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>390</y>
-     <width>110</width>
+     <y>400</y>
+     <width>131</width>
      <height>25</height>
     </rect>
    </property>
@@ -64,7 +67,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>390</y>
+     <y>400</y>
      <width>85</width>
      <height>25</height>
     </rect>
@@ -89,7 +92,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>430</y>
+     <y>460</y>
      <width>85</width>
      <height>25</height>
     </rect>
@@ -108,7 +111,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>430</y>
+     <y>460</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -127,7 +130,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>430</y>
+     <y>460</y>
      <width>171</width>
      <height>25</height>
     </rect>
@@ -151,9 +154,9 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>30</y>
+     <y>20</y>
      <width>368</width>
-     <height>341</height>
+     <height>371</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -881,6 +884,9 @@
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>IBeamCursor</cursorShape>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2382,6 +2388,117 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="Hint_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>430</y>
+     <width>85</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>HINT!</string>
+   </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Col_label">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>430</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Col:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Col_Window">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>430</y>
+     <width>51</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="readOnly">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Row_label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>430</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Row:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Row_Window">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>430</y>
+     <width>41</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="readOnly">
+    <bool>false</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

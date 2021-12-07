@@ -36,6 +36,7 @@ class SudokuGame(QDialog, layout):
         # 콜백 함수 구현
         self.Start_pushButton.clicked.connect(self.startGame)
         self.Submit_pushButton.clicked.connect(self.submitClicked)
+        self.Hint_pushButton.clicked.connect(self.hintClicked)
         self.gridText[0].textChanged.connect(lambda: self.submitEntered(0)); self.gridText[1].textChanged.connect(lambda: self.submitEntered(1)); self.gridText[2].textChanged.connect(lambda: self.submitEntered(2)); self.gridText[3].textChanged.connect(lambda: self.submitEntered(3)); self.gridText[4].textChanged.connect(lambda: self.submitEntered(4)); self.gridText[5].textChanged.connect(lambda: self.submitEntered(5)); self.gridText[6].textChanged.connect(lambda: self.submitEntered(6)); self.gridText[7].textChanged.connect(lambda: self.submitEntered(7)); self.gridText[8].textChanged.connect(lambda: self.submitEntered(8)); self.gridText[9].textChanged.connect(lambda: self.submitEntered(9))
         self.gridText[10].textChanged.connect(lambda: self.submitEntered(10)); self.gridText[11].textChanged.connect(lambda: self.submitEntered(11)); self.gridText[12].textChanged.connect(lambda: self.submitEntered(12)); self.gridText[13].textChanged.connect(lambda: self.submitEntered(13)); self.gridText[14].textChanged.connect(lambda: self.submitEntered(14)); self.gridText[15].textChanged.connect(lambda: self.submitEntered(15)); self.gridText[16].textChanged.connect(lambda: self.submitEntered(16)); self.gridText[17].textChanged.connect(lambda: self.submitEntered(17)); self.gridText[18].textChanged.connect(lambda: self.submitEntered(18)); self.gridText[19].textChanged.connect(lambda: self.submitEntered(19))
         self.gridText[20].textChanged.connect(lambda: self.submitEntered(20)); self.gridText[21].textChanged.connect(lambda: self.submitEntered(21)); self.gridText[22].textChanged.connect(lambda: self.submitEntered(22)); self.gridText[23].textChanged.connect(lambda: self.submitEntered(23)); self.gridText[24].textChanged.connect(lambda: self.submitEntered(24)); self.gridText[25].textChanged.connect(lambda: self.submitEntered(25)); self.gridText[26].textChanged.connect(lambda: self.submitEntered(26)); self.gridText[27].textChanged.connect(lambda: self.submitEntered(27)); self.gridText[28].textChanged.connect(lambda: self.submitEntered(28)); self.gridText[29].textChanged.connect(lambda: self.submitEntered(29))
@@ -50,18 +51,18 @@ class SudokuGame(QDialog, layout):
         for k in range(0, 81):
             row, col = k//9, k%9
             self.gridText[k].setReadOnly(True)
+            self.hintNum = 2
 
 
-    # "Start Game" 버튼에 대한 콜백. grid.py의 class Grid 호출.
+    # "Start" 버튼에 대한 콜백. grid.py의 class Grid 호출.
     def startGame(self):
-
-        #grid 빈칸으로 초기화
+        # grid 빈칸으로 초기화
         for k in range(0, 81):
             row, col = k//9, k%9
             self.gridText[k].setText('')
             self.gridText[k].setReadOnly(False)
 
-        #난이도 확인 후 스도쿠 생성
+        # 난이도 확인 후 스도쿠 생성
         if self.Mode_ComboBox.currentText() == 'easy':
             dif = 2
         else:
@@ -74,12 +75,50 @@ class SudokuGame(QDialog, layout):
             for col in range(0, 9):
                 if self.grid.blankGrid[row][col] != 0:
                     num = str(self.grid.blankGrid[row][col])
-                    self.gridText[row*9+col].setReadOnly(True)
-                    self.gridText[row*9+col].setText(num)
-                    self.gridText[row*9+col].setStyleSheet("background: rgb(233, 233, 233)")
+                    k = row*9+col
+                    self.gridText[k].setReadOnly(True)
+                    self.gridText[k].setText(num)
+                    self.gridText[k].setStyleSheet("background: rgb(233, 233, 233)")
 
         # time.py의 startTime 호출하여 게임 시작 시간 저장
         self.mytime.startTime()
+        # 선택된 빈칸 쓰레기 값으로 초기화
+        self.hintNum = 2
+        self.Result_Window.setText('Only '+str(self.hintNum)+' hint left')
+
+
+    # "Hint" 버튼에 대한 콜백. 마지막으로 클릭된 빈칸의 정답을 알려준다
+    def hintClicked(self):
+        # 힌트 2번 사용하면 힌트 사용불가
+        if self.hintNum < 1:
+            self.Result_Window.setText('No more hint!')
+            return
+        # row, col 받아서 에러처리
+        row = self.Row_Window.text()
+        col = self.Col_Window.text()
+        if not (row.isdigit() and col.isdigit()):
+            self.Result_Window.setText('Input Error!')
+            self.Row_Window.setText('')
+            self.Col_Window.setText('')
+            return
+        row, col = int(row)-1, int(col)-1
+        if not ((0 <= row <= 8) and (0 <= col <= 8)):
+            self.Row_Window.setText('')
+            self.Col_Window.setText('')
+            self.Result_Window.setText('Input Error!')
+            return
+        k = row*9 + col
+        if not 0 <= k <= 80:
+            return
+        if self.grid.blankGrid[row][col] != 0:
+            self.Result_Window.setText('Already Entered!')
+            return
+        self.gridText[k].setText(str(self.grid.originGrid[k//9][k%9]))
+        self.gridText[k].setStyleSheet("background: rgb(233, 233, 233)")
+        self.gridText[k].setReadOnly(True)
+        self.hintNum -= 1
+        self.Result_Window.setText('Only '+str(self.hintNum)+' hint left')
+
 
         
     # "Submit" 버튼에 대한 콜백. 게임 결과 출력.
@@ -136,4 +175,3 @@ if __name__ == '__main__':
     game = SudokuGame()
     game.show()
     sys.exit(app.exec_())
-

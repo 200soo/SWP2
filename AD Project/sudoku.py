@@ -4,7 +4,9 @@ class SudokuCheck:
     def liveCheck(self, grid, row, col, num):
         # 행, 열에 같은 숫자 있는지 확인
         for i in range(0, 9):
-            if (grid[i][col] == num) or (grid[row][i] == num):
+            if (grid[i][col] == num):
+                return False
+            if (grid[row][i] == num):
                 return False
         # small grid에 같은 숫자 있는지 확인
         row //= 3

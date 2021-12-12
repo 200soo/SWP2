@@ -7,7 +7,7 @@ from sudoku import SudokuCheck
 from mytime import CheckTime
 from grid import Grid
 
-#QtDesigner로 만든 사용자 인터페이스 레이아웃 불러오기
+# QtDesigner로 만든 사용자 인터페이스 레이아웃 불러오기
 layout = uic.loadUiType("UI_sudoku.ui")[0]
 
 # 게임 실행, 동작을 조절하는 코드
@@ -51,7 +51,8 @@ class SudokuGame(QDialog, layout):
         for k in range(0, 81):
             row, col = k//9, k%9
             self.gridText[k].setReadOnly(True)
-            self.hintNum = 2
+
+        self.hintNum = -1
 
 
     # "Start" 버튼에 대한 콜백. grid.py의 class Grid 호출.
@@ -89,8 +90,12 @@ class SudokuGame(QDialog, layout):
 
     # "Hint" 버튼에 대한 콜백. 마지막으로 클릭된 빈칸의 정답을 알려준다
     def hintClicked(self):
+        # 게임 시작 전 힌트 사용 불가
+        if self.hintNum == -1:
+            self.Result_Window.setText('Input Error!')
+            return
         # 힌트 2번 사용하면 힌트 사용불가
-        if self.hintNum < 1:
+        elif self.hintNum < 1:
             self.Result_Window.setText('No more hint!')
             return
         # row, col 받아서 에러처리
@@ -113,9 +118,11 @@ class SudokuGame(QDialog, layout):
         if self.grid.blankGrid[row][col] != 0:
             self.Result_Window.setText('Already Entered!')
             return
-        self.gridText[k].setText(str(self.grid.originGrid[k//9][k%9]))
+        num = self.grid.originGrid[row][col]
+        self.gridText[k].setText(str(num))
         self.gridText[k].setStyleSheet("background: rgb(233, 233, 233)")
         self.gridText[k].setReadOnly(True)
+        self.grid.blankGrid[row][col] = num
         self.hintNum -= 1
         self.Result_Window.setText('Only '+str(self.hintNum)+' hint left')
 
@@ -123,20 +130,21 @@ class SudokuGame(QDialog, layout):
         
     # "Submit" 버튼에 대한 콜백. 게임 결과 출력.
     def submitClicked(self):
-        # sudoku.py의 finalCheck를 통해 게임 규칙 만족하는지 확인.
-        if self.sudoku.finalCheck(self.grid.blankGrid) == True:
-            # 성공하면 time.py의 endTime 호출하여 게임 시간 출력.
-            timer = str(self.mytime.endTime())
-            timer += 'sec'
-            self.Result_Window.setText(timer)
-            # gridText 수정 불가하게 설정
-            for k in range(0, 80):
-                self.gridText[k].setReadOnly(True)
-                for k in range(0, 81):
-                    row, col = k//9, k%9
+        try:
+            # sudoku.py의 finalCheck를 통해 게임 규칙 만족하는지 확인.
+            if self.sudoku.finalCheck(self.grid.blankGrid) == True:
+                # 성공하면 time.py의 endTime 호출하여 게임 시간 출력.
+                timer = str(self.mytime.endTime())
+                timer += 'sec'
+                self.Result_Window.setText(timer)
+                # gridText 수정 불가하게 설정
+                for k in range(0, 80):
                     self.gridText[k].setReadOnly(True)
-        else:
-            self.Result_Window.setText('Try Again!')
+            else:
+                self.Result_Window.setText('Try Again!')
+        except:
+                self.Result_Window.setText('Error!')
+
 
 
     # 숫자가 입력될 경우 sudoku.py의 liveCheck 호출.

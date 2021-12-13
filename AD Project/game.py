@@ -86,6 +86,8 @@ class SudokuGame(QDialog, layout):
         # 선택된 빈칸 쓰레기 값으로 초기화
         self.hintNum = 2
         self.Result_Window.setText('Only '+str(self.hintNum)+' hint left')
+        # 게임 성공 여부 초기화
+        self.success = False
 
 
     # "Hint" 버튼에 대한 콜백. 마지막으로 클릭된 빈칸의 정답을 알려준다
@@ -133,6 +135,8 @@ class SudokuGame(QDialog, layout):
         try:
             # sudoku.py의 finalCheck를 통해 게임 규칙 만족하는지 확인.
             if self.sudoku.finalCheck(self.grid.blankGrid) == True:
+                if self.success == True:
+                    return
                 # 성공하면 time.py의 endTime 호출하여 게임 시간 출력.
                 timer = str(self.mytime.endTime())
                 timer += 'sec'
@@ -140,6 +144,8 @@ class SudokuGame(QDialog, layout):
                 # gridText 수정 불가하게 설정
                 for k in range(0, 80):
                     self.gridText[k].setReadOnly(True)
+                # 게임 성공 처리
+                self.success = True
             else:
                 self.Result_Window.setText('Try Again!')
         except:

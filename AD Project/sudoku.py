@@ -30,10 +30,11 @@ class SudokuCheck:
                 return False
             cnt[num - 1] += 1
             # 행, 열, small grid에 겹치는 숫자가 있을 경우 실패
+            tmp = grid[row][col]
             grid[row][col] = 0
             if not SudokuCheck.liveCheck(self, grid, row, col, num):
                 return False
-            grid[row][col] = 0
+            grid[row][col] = tmp
         for i in range(0, 9):
             # 1~9가 9번씩 입력되지 않을 경우 실패
             if cnt[i] != 9:

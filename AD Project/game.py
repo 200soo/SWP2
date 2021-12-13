@@ -83,7 +83,7 @@ class SudokuGame(QDialog, layout):
 
         # time.py의 startTime 호출하여 게임 시작 시간 저장
         self.mytime.startTime()
-        # 선택된 빈칸 쓰레기 값으로 초기화
+        # 힌트 개수 초기화
         self.hintNum = 2
         self.Result_Window.setText('Only '+str(self.hintNum)+' hint left')
         # 게임 성공 여부 초기화
